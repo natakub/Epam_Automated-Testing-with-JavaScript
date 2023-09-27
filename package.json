@@ -1,0 +1,12 @@
+{
+  "name": "Automated testing with js tasks",
+  "version": "1.0.0",
+  "description": "Home tasks for the course Automated testing with JavaScript by Epam",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Nataliia kubytska",
+  "license": "ISC"
+}
