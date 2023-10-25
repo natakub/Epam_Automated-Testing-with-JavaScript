@@ -154,3 +154,63 @@ describe("Iframe - doubleclick()", () => {
     expect(textDecorationValue).toHaveTextContaining("underline");
   });
 });
+
+describe("Login Page - local storage", () => {
+  before(async () => {
+    await browser.url("https://the-internet.herokuapp.com/login");
+    await browser.maximizeWindow();
+  });
+
+  it.only("Should login with valid credentials and set value to the local storage", async () => {
+    const usernameInput = await $("//input[@name='username']");
+    const passwordInput = await $("//input[@name='password']");
+    const submitButton = await $("button[type='submit']");
+    const logMessage = await $("#flash");
+
+    //set value in local storage
+    const key = "userName";
+    const value = "tomsmith";
+
+    await browser.execute(
+      function (key, value) {
+        window.localStorage.setItem(key, value);
+      },
+      key,
+      value
+    );
+
+    //enter valid credentiials
+    await usernameInput.setValue("tomsmith");
+    await passwordInput.setValue("SuperSecretPassword!");
+    await waitAndClick(submitButton);
+
+    //check succesfull login
+    await expect(browser).toHaveUrlContaining("secure");
+    expect(await logMessage.isExisting()).toBe(true);
+    await expect(logMessage).toHaveTextContaining(
+      "You logged into a secure area!"
+    );
+
+    // ensure that the local storage value is set before reading it
+    await browser.waitUntil(
+      async () => {
+        const readValue = await browser.execute(function (key) {
+          return window.localStorage.getItem(key);
+        }, key);
+        return readValue === value;
+      },
+      {
+        timeout: 5000,
+        timeoutMsg:
+          "Local storage value did not match the expected value within 5 seconds",
+      }
+    );
+
+    //Now safely retrive local storage value for our assertion
+    const readValue = await browser.execute(function (key) {
+      return window.localStorage.getItem(key);
+    }, key);
+
+    await expect(readValue).toBe(value);
+  });
+});
