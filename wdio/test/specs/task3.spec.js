@@ -161,7 +161,7 @@ describe("Login Page - local storage", () => {
     await browser.maximizeWindow();
   });
 
-  it.only("Should login with valid credentials and set value to the local storage", async () => {
+  it("Should login with valid credentials and set value to the local storage", async () => {
     const usernameInput = await $("//input[@name='username']");
     const passwordInput = await $("//input[@name='password']");
     const submitButton = await $("button[type='submit']");
