@@ -1,5 +1,5 @@
 const { $ } = require("@wdio/globals");
-const Page = require("./page");
+const Page = require("../../src/po/pages/page");
 const { waitAndClick } = require("../../src/tests/commands");
 
 /**
