@@ -1,4 +1,3 @@
-const commands = require("../tests/commands");
 const { existsSync, mkdirSync } = require("fs");
 
 exports.config = {
@@ -54,6 +53,9 @@ exports.config = {
   capabilities: [
     {
       browserName: "chrome",
+      // "goog:chromeOptions": {
+      //   binary: "C:/Users/Roman/Downloads/chrome-win64/chrome-win64/chrome.exe", // Check your path
+      // },
     },
   ],
 
@@ -88,7 +90,7 @@ exports.config = {
   // with `/`, the base url gets prepended, not including the path portion of your baseUrl.
   // If your `url` parameter starts without a scheme or `/` (like `some/path`), the base url
   // gets prepended directly.
-  baseUrl: "http://localhost",
+  baseUrl: "https://the-internet.herokuapp.com",
   //
   // Default timeout for all waitFor* commands.
   waitforTimeout: 10000,
@@ -152,7 +154,7 @@ exports.config = {
   // onPrepare: function (config, capabilities) {
   // },
   /**
-   * Gets executed before a worker process is spawned and can be used to initialise specific service
+   * Gets executed before a worker process is spawned and can be used to initialize specific service
    * for that worker as well as modify runtime environments in an async fashion.
    * @param  {string} cid      capability id (e.g 0-0)
    * @param  {object} caps     object containing capabilities for session that will be spawn in the worker
@@ -188,11 +190,8 @@ exports.config = {
    * @param {Array.<String>} specs        List of spec file paths that are to be run
    * @param {object}         browser      instance of created browser/device session
    */
-  before: async function (capabilities, specs) {
-    browser.addCommand("waitAndClick", commands.waitAndClick);
-
-    await browser.maximizeWindow();
-  },
+  // before: function (capabilities, specs) {
+  // },
   /**
    * Runs before a WebdriverIO command gets executed.
    * @param {string} commandName hook command name
